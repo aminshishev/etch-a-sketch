@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #div {
+            display: flex;
+            flex-direction: column;
+            width: 960px;
+            height: 960px;
+            border: 4px solid black;
+            background-color: white;
+        }
+
+        #but {
+            position: fixed;
+            width: 150px;
+            height: 70px;
+            top: 50px;
+            left: 50px;
+            border-radius: 20px;
+            border-width: 5px;
+            background: url('button.jpg') no-repeat;
+            background-size: cover;
+            border-color: gold;
+            font-size: x-large;
+            font-family: monospace;
+            font-style: unset;
+            font-weight: bold;
+            color: rgba(255, 255, 0, 0.8);
+        }
+
+        #but:hover,
+        #def:hover,
+        #shader:hover,
+        #ClearBut:hover {
+            box-shadow: 10px 10px 31px 6px rgba(3, 240, 11, 0.85);
+        }
+        #def {
+            position: fixed;
+            width: 150px;
+            height: 70px;
+            top: 150px;
+            left: 50px;
+            border-radius: 20px;
+            border-width: 5px;
+            background: url('default.jpg') no-repeat;
+            background-size: cover;
+            border-color: gold;
+            font-size: x-large;
+            font-family: monospace;
+            font-style: unset;
+            font-weight: bold;
+            color: red;
+        }
+        #shader {position: fixed;
+            width: 150px;
+            height: 70px;
+            top: 250px;
+            left: 50px;
+            border-radius: 20px;
+            border-width: 5px;
+            background: url('shader.jpg') no-repeat;
+            background-size: cover;
+            border-color: gold;
+            font-size: x-large;
+            font-family: monospace;
+            font-style: unset;
+            font-weight: bold;
+            color: rgba(255, 255, 0, 0.8);}
+        #ClearBut {
+            position: fixed;
+            width: 150px;
+            height: 70px;
+            top: 350px;
+            left: 50px;
+            border-radius: 20px;
+            border-width: 5px;
+            background: url('clear.jpg') no-repeat;
+            background-size: cover;
+            border-color: gold;
+            font-size: x-large;
+            font-family: monospace;
+            font-style: unset;
+            font-weight: bold;
+            color: black;
+        }
+
+    </style>
+</head>
+
+<body style="background: url('Background.jpg');">
+    <button id='but'>New Grid</button>
+    <button id='def'>Default color</button>
+    <button id='shader'>Shader</button>
+    <button id='ClearBut'>Clear</button>
+
+    <div style="display: flex; justify-content: center;">
+        <div id='div'></div>
+    </div>
+    <script>
+        let button = document.querySelector('#but');
+        let cnt = 16;
+        let container = document.querySelector('#div');
+        let clearbut = document.querySelector('#ClearBut');
+        let def = document.querySelector('#def');
+        let shader = document.querySelector('#shader');
+        function ScreenReset() {
+            let pixels = document.querySelectorAll('.row');
+            for (i = 0; i < pixels.length; i++) {
+                container.removeChild(pixels[i]);
+            };
+        }
+        button.addEventListener('click', function () {
+            ScreenReset();
+            cnt = prompt('Please choose count of squares(A x A)');
+            for (i = 0; i < cnt; i++) {
+                let row = document.createElement('div');
+                row.className = 'row';
+                row.style.cssText = 'display: flex;width: 100%; height: 100%;';
+                container.appendChild(row);
+                for (a = 0; a < cnt; a++) {
+                    let column = document.createElement('div');
+                    column.className = 'column';
+                    column.style.cssText = 'display: flex;width: 100%;height: 100%;';
+                    column.addEventListener('mouseover', function () {
+                        column.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+                    });
+                    row.appendChild(column);
+                }
+            };
+        });
+        clearbut.addEventListener('click', function () {
+            let pixels = document.querySelectorAll('.column');
+            for (i = 0; i < pixels.length; i++) {
+                pixels[i].style.backgroundColor = 'white';
+            }
+        });
+        def.addEventListener('click', function () {
+            ScreenReset();
+            cnt = prompt('Please choose count of squares(A x A)');
+            for (i = 0; i < cnt; i++) {
+                let row = document.createElement('div');
+                row.className = 'row';
+                row.style.cssText = 'display: flex;width: 100%;height: 100%';
+                container.appendChild(row);
+                for (a = 0; a < cnt; a++) {
+                    let column = document.createElement('div');
+                    column.className = 'column';
+                    column.style.cssText = 'display:flex;width:100%;height: 100%';
+                    column.addEventListener('mouseover', function () {
+                        column.style.backgroundColor = 'black';
+                    });
+                    row.appendChild(column);
+                }
+            }
+        })
+        shader.addEventListener('click', function () {
+            ScreenReset();
+            cnt = prompt('Please choose count of squares(A x A)');
+            for (i = 0; i < cnt; i++) {
+                let row = document.createElement('div');
+                row.className = 'row';
+                row.style.cssText = 'display: flex;width: 100%;height: 100%';
+                container.appendChild(row);
+                for (a = 0; a < cnt; a++) {
+                    let column = document.createElement('div');
+                    column.className = 'column';
+                    column.style.cssText = 'display:flex;width:100%;height: 100%; opacity: 0;background-color: black';
+
+                    column.addEventListener('mouseover', function () {
+                        //column.style.backgroundColor = 'black';
+                        column.style.opacity =parseFloat(column.style.opacity) + 0.1;
+                    })
+                    row.appendChild(column);
+                }
+            }
+        })
+
+
+
+
+
+
+
+
+
+        for (i = 0; i < cnt; i++) {
+            let row = document.createElement('div');
+            row.className = 'row';
+            row.style.cssText = 'display: flex;width: 100%; height: 100%;';
+            container.appendChild(row);
+            for (a = 0; a < cnt; a++) {
+                let column = document.createElement('div');
+                column.className = 'column';
+                column.style.cssText = 'display: flex;width: 100%;height: 100%;';
+                column.addEventListener('mouseover', function () {
+                    column.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+                });
+                row.appendChild(column);
+            }
+        };
+
+
+
+
+
+    </script>
+</body>
+
+</html>
